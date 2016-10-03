@@ -11,7 +11,8 @@
         <script type="text/javascript">
             var locations = [];
             {% for index, row in buildings.iterrows() %}
-            locations.push(['{{index}}','{{row.LATITUDE}}','{{row.LONGITUDE}}','{{row.ID}}']);
+            console.log('{{row.COMPLET}}');
+            locations.push(['{{row.COMPLET}}','{{row.LATITUDE}}','{{row.LONGITUDE}}','{{row.ID}}']);
             {% endfor %}
             var map = new google.maps.Map(document.getElementById('map'), {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
