@@ -81,6 +81,7 @@
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
                     var info = '\
+                        <div style="width:200px;"> \
                         <p align="left"><b>{{row.COMPLET}}</b></p> \
                         <p>{{row.VALEUR_BATIMENT}} \
                             <br>{{row.VALEUR_TERRAIN}} \
@@ -93,6 +94,12 @@
                     select_location(document.getElementById('{{row.ID}}'),true);
                 }
             })(marker, '{{index}}'));
+            google.maps.event.addListener(infowindow,'closeclick',function(){
+                if (selected_location) {
+                    selected_location.selected = null;
+                    selected_location.style.background = "None";
+                }
+            });
             markers['{{row.ID}}'] = marker;
             {% endfor %}
             map.fitBounds(bounds);
