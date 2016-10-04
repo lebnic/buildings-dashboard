@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            html,body { padding:0; margin:0; height:100%; }
+            #panel { background-color: #DDD; position:absolute; top:0; left:0; bottom:0; width:300px; }
+            #map_canvas { background:red; position:absolute; top:0; left:300px; right:0; bottom:0; }
+        </style>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>Google Maps Multiple Markers</title>
         <script src="http://maps.google.com/maps/api/js?sensor=false"
                 type="text/javascript"></script>
     </head>
     <body>
-        <div id="map" style="width: 500px; height: 400px;"></div>
+        <div id="panel">
+            {% for index, row in buildings.iterrows() %}
+            <div>
+                <p>{{row.COMPLET}}<br>
+                    <b>{{row.VALEUR_BATIMENT}}</b><br>
+                    <b>{{row.VALEUR_TERRAIN}}</b><br>
+                    <b>------------</b><br>
+                    <b>{{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}}</b>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="map_canvas"></div>
         <script type="text/javascript">
             var locations = [];
             {% for index, row in buildings.iterrows() %}
-            console.log('{{row.COMPLET}}');
             locations.push(['{{row.COMPLET}}','{{row.LATITUDE}}','{{row.LONGITUDE}}','{{row.ID}}']);
             {% endfor %}
-            var map = new google.maps.Map(document.getElementById('map'), {
+            var map = new google.maps.Map(document.getElementById('map_canvas'), {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             var infowindow = new google.maps.InfoWindow();
@@ -37,3 +53,4 @@
         </script>
     </body>
 </html>
+
