@@ -14,18 +14,39 @@
     <body>
         <div id="panel">
             {% for index, row in buildings.iterrows() %}
-            <div>
-                <p>{{row.COMPLET}}<br>
-                    <b>{{row.VALEUR_BATIMENT}}</b><br>
-                    <b>{{row.VALEUR_TERRAIN}}</b><br>
-                    <b>------------</b><br>
-                    <b>{{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}}</b>
+            <div id="{{row.ID}}" onclick="select_location(this)" onMouseOut="mouse_out(this)" onMouseOver="mouse_over(this)">
+                <p align="left"><b>{{row.COMPLET}}</b></p>
+                <p>{{row.VALEUR_BATIMENT}}
+                    <br>{{row.VALEUR_TERRAIN}}
+                    <br>------------
+                    <br>{{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}}
                 </p>
+                <p align="right">more...</p>
             </div>
             {% endfor %}
         </div>
         <div id="map_canvas"></div>
         <script type="text/javascript">
+            var selected_location = null;
+            function select_location(location) {
+                if (selected_location) {
+                    selected_location.selected = null;
+                    selected_location.style.background = "None";
+                }
+                location.selected = true;
+                location.style.background ="LightGrey";
+                selected_location = location;
+               }
+            function mouse_over(location) {
+                if (!location.selected) {
+                    location.style.background ="Grey";
+                }
+            }
+            function mouse_out(location) {
+                if (!location.selected) {
+                    location.style.background = "None";
+                }
+            }
             var locations = [];
             {% for index, row in buildings.iterrows() %}
             locations.push(['{{row.COMPLET}}','{{row.LATITUDE}}','{{row.LONGITUDE}}','{{row.ID}}']);
@@ -46,6 +67,7 @@
                     return function() {
                         infowindow.setContent(locations[i][0]);
                         infowindow.open(map, marker);
+                        console.log(marker);
                     }
                 })(marker, i));
             }
