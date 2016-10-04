@@ -4,7 +4,7 @@
         <style>
             html,body { padding:0; margin:0; height:100%; }
             #panel { background-color:white; position:absolute; top:0; left:0; bottom:0; width:300px; overflow-y: scroll; }
-            #map_canvas { background:white; position:absolute; top:0; left:300px; right:0; bottom:0; }
+            #map_canvas { background:white; position:absolute; top:0; left:300px; right:0; bottom:0;}
         </style>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <title>Google Maps Multiple Markers</title>
@@ -14,7 +14,12 @@
     <body>
         <div id="panel">
             {% for index, row in buildings.iterrows() %}
-            <div id="{{row.ID}}" onclick="select_location(this)" onMouseOut="mouse_out(this)" onMouseOver="mouse_over(this)">
+            <div id="{{row.ID}}" onclick="select_location(this)" onMouseOut="mouse_out(this)" onMouseOver="mouse_over(this)" style="border-bottom-style: solid;
+                                                                                                                                    border-bottom-width: 1px;
+                                                                                                                                    border-top-style: solid;
+                                                                                                                                    border-top-width: 1px;
+                                                                                                                                    padding-left: 10px;
+                                                                                                                                    padding-right: 10px;">
                 <p align="left"><b>{{row.COMPLET}}</b></p>
                 <p>{{row.VALEUR_BATIMENT}}
                     <br>{{row.VALEUR_TERRAIN}}
@@ -75,7 +80,15 @@
             });
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
                 return function() {
-                    infowindow.setContent('{{row.COMPLET}}');
+                    var info = '\
+                        <p align="left"><b>{{row.COMPLET}}</b></p> \
+                        <p>{{row.VALEUR_BATIMENT}} \
+                            <br>{{row.VALEUR_TERRAIN}} \
+                            <br>------------ \
+                            <br>{{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}} \
+                        </p> \
+                        <p align="right">more...</p>';
+                    infowindow.setContent(info);
                     infowindow.open(map, marker);
                     select_location(document.getElementById('{{row.ID}}'),true);
                 }
