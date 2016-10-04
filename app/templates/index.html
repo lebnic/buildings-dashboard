@@ -27,7 +27,7 @@
         </div>
         <div id="map_canvas"></div>
         <script type="text/javascript">
-            var selected_location = null;
+            var selected_location;
             function select_location(location) {
                 if (selected_location) {
                     selected_location.selected = null;
@@ -47,30 +47,30 @@
                     location.style.background = "None";
                 }
             }
-            var locations = [];
-            {% for index, row in buildings.iterrows() %}
-            locations.push(['{{row.COMPLET}}','{{row.LATITUDE}}','{{row.LONGITUDE}}','{{row.ID}}']);
-            {% endfor %}
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             var infowindow = new google.maps.InfoWindow();
             var marker, i;
             var bounds = new google.maps.LatLngBounds();
-            for (i = 0; i < locations.length; i++) {
-                bounds.extend(new google.maps.LatLng(locations[i][1], locations[i][2]));
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map
-                });
-                google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        infowindow.setContent(locations[i][0]);
-                        infowindow.open(map, marker);
-                        console.log(marker);
-                    }
-                })(marker, i));
-            }
+             
+             
+            {% for index, row in buildings.iterrows() %}
+            bounds.extend(new google.maps.LatLng('{{row.LATITUDE}}', '{{row.LONGITUDE}}'));
+             marker = new google.maps.Marker({
+                position: new google.maps.LatLng('{{row.LATITUDE}}', '{{row.LONGITUDE}}'),
+                map: map
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                return function() {
+                    infowindow.setContent('{{row.COMPLET}}');
+                    infowindow.open(map, marker);
+                    select_location(document.getElementById('{{row.ID}}'));
+                }
+            })(marker, '{{index}}'));
+            {% endfor %}
+             
+             
             map.fitBounds(bounds);
         </script>
     </body>
