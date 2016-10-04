@@ -28,7 +28,16 @@
         <div id="map_canvas"></div>
         <script type="text/javascript">
             var selected_location;
-            function select_location(location) {
+            function scrollIntoViewIfNeeded(target) {
+                var rect = target.getBoundingClientRect();
+                if (rect.bottom > window.innerHeight) {
+                    target.scrollIntoView({block: "end", behavior: "smooth"});
+                }
+                if (rect.top < 0) {
+                    target.scrollIntoView({block: "start", behavior: "smooth"});
+                }
+            }
+            function select_location(location,is_marker_clicked) {
                 if (selected_location) {
                     selected_location.selected = null;
                     selected_location.style.background = "None";
@@ -36,7 +45,11 @@
                 location.selected = true;
                 location.style.background ="LightGrey";
                 selected_location = location;
-               }
+                scrollIntoViewIfNeeded(location);
+                if (markers && markers[location.id] && !is_marker_clicked){
+                    new google.maps.event.trigger( markers[location.id], 'click' );
+                }
+            }
             function mouse_over(location) {
                 if (!location.selected) {
                     location.style.background ="Grey";
@@ -53,8 +66,7 @@
             var infowindow = new google.maps.InfoWindow();
             var marker, i;
             var bounds = new google.maps.LatLngBounds();
-             
-             
+            var markers = [];
             {% for index, row in buildings.iterrows() %}
             bounds.extend(new google.maps.LatLng('{{row.LATITUDE}}', '{{row.LONGITUDE}}'));
              marker = new google.maps.Marker({
@@ -65,12 +77,11 @@
                 return function() {
                     infowindow.setContent('{{row.COMPLET}}');
                     infowindow.open(map, marker);
-                    select_location(document.getElementById('{{row.ID}}'));
+                    select_location(document.getElementById('{{row.ID}}'),true);
                 }
             })(marker, '{{index}}'));
+            markers['{{row.ID}}'] = marker;
             {% endfor %}
-             
-             
             map.fitBounds(bounds);
         </script>
     </body>
