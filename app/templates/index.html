@@ -14,10 +14,8 @@
     <body>
         <div id="panel">
             {% for index, row in buildings.iterrows() %}
-            <div id="{{row.ID}}" onclick="select_location(this)" onMouseOut="mouse_out(this)" onMouseOver="mouse_over(this)" style="border-bottom-style: solid;
-                                                                                                                                    border-bottom-width: 1px;
-                                                                                                                                    border-top-style: solid;
-                                                                                                                                    border-top-width: 1px;
+            <div id="{{row.ID}}" onclick="select_location(this)" onMouseOut="mouse_out(this)" onMouseOver="mouse_over(this)" style="border-bottom:1px solid;
+                                                                                                                                    border-top:1px solid;
                                                                                                                                     padding-left: 10px;
                                                                                                                                     padding-right: 10px;">
                 <p><b>{{row.COMPLET}}</b></p>
@@ -81,37 +79,26 @@
                 return function() {
                     var info = '\
                         <div style="width:400px;"> \
-                        <p><b>{{row.COMPLET}}</b></p> \
-                        <p>Valeur Batiment: {{row.VALEUR_BATIMENT}} $ \
-                            <br>Valeur Terrain: {{row.VALEUR_TERRAIN}} $ \
-                            <br>------------ \
-                            <br>Valeur Total: {{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}} $ \
-                        </p> \
-                        <p>Description: {{row.DESCRIPTION}} \
-                            <br>Metro a moins de 500m: {{row.TAMPON_500_METRO}} \
-                            <br>Quartier d\'interet: {{row.INTERET_QUARTIER}} \
-                            <br>Immeuble d\'interet: {{row.INTERET_IMMEUBLE}} \
-                            <br>Immeuble patrimonial: {{row.TYPE_ZONE_PATRIMOINE}} \
-                            <br>Immeuble patrimonial: {{row.TYPE_ZONE_PATRIMOINE}} \
-                        </p> \
-                        <p><b>Reglementation</b> \
-                        <UL>\
+                        <p><b>{{row.COMPLET}}</b> \
+                        <UL style="list-style: none;">\
+                            <LI><p>{{row.DESCRIPTION}}</p> \
+                            <LI>Valeur Batiment: {{row.VALEUR_BATIMENT}} $ \
+                            <LI>Valeur Terrain: {{row.VALEUR_TERRAIN}} $ \
+                            <LI>Compte Foncier: {{row.COMPTE_FONCIER}} \
                             <LI>Usage: {{row.REGL_USAGE}} \
                             <LI>Metro a moins de 500m: {{row.TAMPON_500_METRO}} \
                             <LI>Quartier d\'interet: {{row.INTERET_QUARTIER}} \
                             <LI>Immeuble d\'interet: {{row.INTERET_IMMEUBLE}} \
-                            {% if (row.ZONE_PATRIMOINE != "S.O.") %} \
-                                <LI>Immeuble patrimonial: {{row.ZONE_PATRIMOINE}} \
-                            {% endif %} \
-                            {% if (row.TYPE_ZONE_PATRIMOINE != "S.O.") %} \
-                                <LI>Type immeuble patrimonial: {{row.TYPE_ZONE_PATRIMOINE}} \
-                            {% endif %} \
+                            <LI>Immeuble patrimonial: {{row.ZONE_PATRIMOINE}} \
+                            <LI>Type immeuble patrimonial: {{row.TYPE_ZONE_PATRIMOINE}} \
                         </UL> \
                         </p> \
-                        <p>Compte Foncier: {{row.COMPTE_FONCIER}}</p> \
-                        <p>Proprietaire: {{row.NOM_PROPRIETAIRE}}, {{row.PRENOM_PROPRIETAIRE}} \
-                            <br>{{row.COMPLET_ADR_PROP}} \
-                            <br>{{row.VILLE_ADR_PROP}}, {{row.CP_ADR_PROP}} \
+                        <p><b>Proprietaire</b> \
+                        <UL style="list-style: none;">\
+                            <LI>{{row.PRENOM_PROPRIETAIRE}} {{row.NOM_PROPRIETAIRE}} \
+                            <LI>{{row.COMPLET_ADR_PROP}} \
+                            <LI>{{row.VILLE_ADR_PROP}}, {{row.CP_ADR_PROP}} \
+                        </UL> \
                         </p>';
                     infowindow.setContent(info);
                     infowindow.open(map, marker);
