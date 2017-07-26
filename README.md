@@ -24,3 +24,7 @@ http://geogratis.gc.ca/api/fr/nrcan-rncan/ess-sst/56124851-71fc-4f94-8df2-40f59c
 
 Objectif :
 - Créer un rapport de la valeur des bâtiments et des terrains par circonscription à Montreal.
+
+Instructions to run:
+- python run.py
+- http://127.0.0.1:5000/
