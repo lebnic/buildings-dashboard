@@ -19,10 +19,10 @@
                                                                                                                                     padding-left: 10px;
                                                                                                                                     padding-right: 10px;">
                 <p><b>{{row.COMPLET}}</b></p>
-                <p>Valeur Batiment: {{row.VALEUR_BATIMENT}} $
-                    <br>Valeur Terrain: {{row.VALEUR_TERRAIN}} $
+                <p>Valeur Batiment: {{row.VALEUR_BAT}} $
+                    <br>Valeur Terrain: {{row.VALEUR_TER}} $
                     <br>------------
-                    <br>Valeur Total: {{row.VALEUR_BATIMENT + row.VALEUR_TERRAIN}} $
+                    <br>Valeur Total: {{row.VALEUR_BAT + row.VALEUR_TER}} $
                 </p>
             </div>
             {% endfor %}
@@ -82,8 +82,8 @@
                         <p><b>{{row.COMPLET}}</b> \
                         <UL style="list-style: none;">\
                             <LI><p>{{row.DESCRIPTION}}</p> \
-                            <LI>Valeur Batiment: {{row.VALEUR_BATIMENT}} $ \
-                            <LI>Valeur Terrain: {{row.VALEUR_TERRAIN}} $ \
+                            <LI>Valeur Batiment: {{row.VALEUR_BAT}} $ \
+                            <LI>Valeur Terrain: {{row.VALEUR_TER}} $ \
                             <LI>Compte Foncier: {{row.COMPTE_FONCIER}} \
                             <LI>Usage: {{row.REGL_USAGE}} \
                             <LI>Metro a moins de 500m: {{row.TAMPON_500_METRO}} \

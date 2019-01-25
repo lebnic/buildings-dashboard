@@ -6,9 +6,9 @@ import numpy as np
 @app.route('/')
 @app.route('/index')
 def index():
-    url = 'http://donnees.ville.montreal.qc.ca/dataset/772087ee-e11f-42a8-ab6b-a175d6c6e249/resource/9d77d85a-f54c-408a-b6ff-3d847c05b2e0/download/sause01direction01directiondonneesouvertesbatimentsvacantsbatimentsvacantsvm2015.csv'
+    url = 'http://donnees.ville.montreal.qc.ca/dataset/772087ee-e11f-42a8-ab6b-a175d6c6e249/resource/886bdfe0-3946-413c-8dff-9c82ee9631c1/download/batimentsvacants2016.csv'
     buildings = pd.read_csv(url, sep = ',',encoding = "latin1")
-    buildings['VALEUR_TOTAL'] = buildings['VALEUR_TERRAIN']+buildings['VALEUR_BATIMENT']
+    buildings['VALEUR_TOTAL'] = buildings['VALEUR_TER']+buildings['VALEUR_TER']
     buildings = buildings.replace(np.nan,' ', regex=True)
     return render_template('index.html',
-                          buildings=buildings.sort(['VALEUR_TOTAL'], ascending=[True]))
+                          buildings=buildings)
